@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:uber_clone/features/Auth/data/models/user_model.dart';
 
 abstract class BaseAuthRepository {
   Future<void> verifyPhone(
@@ -9,4 +10,6 @@ abstract class BaseAuthRepository {
       required void Function(String)? codeAutoRetrievalTimeout});
   Future<void> verifyOTP(
       {required String smsCode, required String verificationId});
+  Future<void>saveUserInfromation({required UserModel userModel});
+  Future<String> getImageUrl(String uid);
 }

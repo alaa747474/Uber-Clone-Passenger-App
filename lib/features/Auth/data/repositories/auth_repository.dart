@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:uber_clone/features/Auth/data/datasources/remote/auth_remote_data_source.dart';
+import 'package:uber_clone/features/Auth/data/models/user_model.dart';
 import 'package:uber_clone/features/Auth/domain/repositories/base_auth_repository.dart';
 
 class AuthRepository implements BaseAuthRepository {
@@ -27,4 +28,15 @@ class AuthRepository implements BaseAuthRepository {
         codeSent: codeSent!,
         codeAutoRetrievalTimeout: codeAutoRetrievalTimeout!);
   }
+  
+  @override
+  Future<void> saveUserInfromation({required UserModel userModel})async {
+    await _baseAuthRemoteDataSource.saveUserInformation(userModel: userModel);
+  }
+  
+  @override
+  Future<String> getImageUrl(String uid) async{
+   return await _baseAuthRemoteDataSource.getImageUrl(uid);
+  }
+  
 }

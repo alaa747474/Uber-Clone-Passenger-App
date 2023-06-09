@@ -3,11 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppTheme {
   static ThemeData theme() => ThemeData(
+      
         iconTheme: const IconThemeData(color: Colors.white),
         textTheme: textTheme(),
         useMaterial3: true,
+        hintColor: Colors.grey[500],
         primaryColor: const Color(0xff58BE3F),
-        highlightColor: const Color.fromARGB(255, 43, 50, 119),
         cardColor: Colors.white,
         scaffoldBackgroundColor: const Color(0xffF2F2F2),
       );
