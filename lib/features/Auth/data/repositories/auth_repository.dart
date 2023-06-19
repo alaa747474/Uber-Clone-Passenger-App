@@ -39,4 +39,12 @@ class AuthRepository implements BaseAuthRepository {
    return await _baseAuthRemoteDataSource.getImageUrl(uid);
   }
   
+  @override
+  Stream<User?> getUserState() =>_baseAuthRemoteDataSource.getUserState();
+  
+  @override
+  Future<void> signOut() async{
+    await _baseAuthRemoteDataSource.signOut();
+  }
+  
 }

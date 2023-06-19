@@ -1,11 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:uber_clone/core/constants/app_assets.dart';
+import 'package:uber_clone/core/constants/app_routes_name.dart';
 import 'package:uber_clone/core/widgets/custom_button.dart';
-import 'package:uber_clone/features/Auth/presentation/screens/otp_screen.dart';
 import 'package:uber_clone/features/Auth/presentation/widgets/privacy_policy_text.dart';
 import 'package:uber_clone/features/Auth/presentation/widgets/phone_text_field.dart';
 
@@ -68,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 BlocConsumer<AuthBloc, AuthState>(
                   listener: (context, state) {
                     if (state is PhoneNumberSubmited) {
-                      Navigator.push(context, MaterialPageRoute(builder: (_)=>OTPScreen()));
+                      Navigator.pushReplacementNamed(context, AppRoutes.otpScreen,arguments: _phoneController.text) ;
                     }
                   },
                   builder: (context, state) {

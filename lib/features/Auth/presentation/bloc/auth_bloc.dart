@@ -1,16 +1,11 @@
-import 'dart:io';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:uber_clone/features/Auth/data/models/user_model.dart';
-import 'package:uber_clone/features/Auth/domain/usecases/get_image_url_use_case.dart';
-import 'package:uber_clone/features/Auth/domain/usecases/save_user_information_use_case.dart';
-import 'package:uber_clone/features/Auth/domain/usecases/verify_otp_use_case.dart';
-import 'package:uber_clone/features/Auth/domain/usecases/verify_phone_use_case.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:uber_clone/core/usecase/usecase.dart';
+import 'package:uber_clone/features/home/presentation/screens/home_screen.dart';
+import '../../../../core/constants/app_routes_name.dart';
+import '../../auth.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -20,20 +15,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final VerifyPhoneUseCase _verifyPhoneUseCase;
   final SaveUserInformationUseCase _saveUserInformationUseCase;
   final GetImageUrlUseCase _getImageUrlUseCase;
+  final GetUserStateUseCase _getUserStateUseCase;
   final FirebaseAuth _auth;
   late String verificationId;
   String? imageUrl;
+  late String initialRoute;
   AuthBloc(
     this._verifyOTPUseCase,
     this._verifyPhoneUseCase,
-    this._auth,
     this._saveUserInformationUseCase,
     this._getImageUrlUseCase,
+    this._getUserStateUseCase,
+    this._auth,
   ) : super(AuthLoading()) {
     on<VerifyPhone>(_verifyPhone);
     on<VerifyOTP>(_verifyOTP);
     on<SaveUserInformation>(_saveUserInformation);
     on<GetImageUrl>(_getImageUrl);
+    on<GetUserState>(_getUserState);
   }
 
   verificationCompleted(PhoneAuthCredential credential) async {
@@ -61,8 +60,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       await _verifyPhoneUseCase.call(verifyPhoneParams);
       emit(PhoneNumberSubmited());
-    } on FirebaseAuthException catch (e) {
-      emit(AuthFailure(e.message!));
+    }  catch (e) {
+      if (e is FirebaseAuthException) {
+        emit(AuthFailure(e.message!));
+      }
+      emit(AuthFailure(e.toString()));
     }
   }
 
@@ -81,6 +83,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   void _getImageUrl(GetImageUrl event, Emitter<AuthState> emit) {
     _getImageUrlUseCase.call(_auth.currentUser!.uid).then((value) {
       imageUrl = value;
+      emit(ProfilePicLoaded());
     });
   }
 
@@ -104,5 +107,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
       emit(AuthFailure(e.toString()));
     }
+  }
+
+  void _getUserState(GetUserState event, Emitter<AuthState> emit) async {
+    return await emit.forEach(_getUserStateUseCase.call(NoParams()), onData: (user) {
+      if (user != null && user.email != null) {
+        initialRoute = AppRoutes.homeScreen;
+        return const InitialRouteScreenLoaded(HomeScreen());
+      } else if (user != null && user.email == null) {
+        initialRoute = AppRoutes.registerScreen;
+        return const InitialRouteScreenLoaded(RegisterScreen());
+      } else {
+        initialRoute = AppRoutes.loginScreen;
+        return const InitialRouteScreenLoaded(LoginScreen());
+      }
+    });
   }
 }

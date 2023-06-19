@@ -20,6 +20,14 @@ class UserProfilePicStack extends StatelessWidget {
             left: MediaQuery.of(context).size.width / 4,
             child: BlocBuilder<AuthBloc, AuthState>(
               builder: (context, state) {
+                if (context.read<AuthBloc>().imageUrl != null) {
+                  return CircleAvatar(
+                    radius: 80.r,
+                    backgroundColor: Colors.grey[300],
+                    backgroundImage:
+                        NetworkImage(context.read<AuthBloc>().imageUrl!),
+                  );
+                }
                 return InkWell(
                   onTap: () {
                     context.read<AuthBloc>().add(GetImageUrl());

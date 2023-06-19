@@ -6,6 +6,7 @@ import 'package:uber_clone/features/Auth/data/datasources/remote/auth_remote_dat
 import 'package:uber_clone/features/Auth/data/repositories/auth_repository.dart';
 import 'package:uber_clone/features/Auth/domain/repositories/base_auth_repository.dart';
 import 'package:uber_clone/features/Auth/domain/usecases/get_image_url_use_case.dart';
+import 'package:uber_clone/features/Auth/domain/usecases/get_user_state_use_case.dart';
 import 'package:uber_clone/features/Auth/domain/usecases/save_user_information_use_case.dart';
 import 'package:uber_clone/features/Auth/domain/usecases/verify_otp_use_case.dart';
 import 'package:uber_clone/features/Auth/domain/usecases/verify_phone_use_case.dart';
@@ -16,12 +17,13 @@ GetIt getIt = GetIt.instance;
 class ServicesLocator {
   void init() {
     // BLOCS
-    getIt.registerFactory(() => AuthBloc(
+    getIt.registerLazySingleton(() => AuthBloc(
           getIt(),
           getIt(),
-          FirebaseAuth.instance,
           getIt(),
           getIt(),
+          getIt(),
+          FirebaseAuth.instance
         ));
 
     // USE CASES
@@ -29,6 +31,7 @@ class ServicesLocator {
     getIt.registerLazySingleton(() => VerifyOTPUseCase(getIt()));
     getIt.registerLazySingleton(() => VerifyPhoneUseCase(getIt()));
     getIt.registerLazySingleton(() => GetImageUrlUseCase(getIt()));
+    getIt.registerLazySingleton(() => GetUserStateUseCase(getIt()));
 
     // REPOSITORIES
     getIt.registerLazySingleton<BaseAuthRepository>(

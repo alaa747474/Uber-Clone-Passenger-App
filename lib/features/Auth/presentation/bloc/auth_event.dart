@@ -49,3 +49,8 @@ class GetImageUrl extends AuthEvent {
   @override
   List<Object> get props => [];
 }
+
+class GetUserState extends AuthEvent {
+  @override
+  List<Object> get props => [];
+}

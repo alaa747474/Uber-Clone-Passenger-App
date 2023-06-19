@@ -3,7 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppTheme {
   static ThemeData theme() => ThemeData(
-      
+        bottomSheetTheme:const BottomSheetThemeData(
+        backgroundColor: Colors.transparent  
+        ),
+        
         iconTheme: const IconThemeData(color: Colors.white),
         textTheme: textTheme(),
         useMaterial3: true,
@@ -24,6 +27,11 @@ class AppTheme {
         fontWeight: FontWeight.bold,
         fontSize: 20.sp,
       ),
+      titleMedium:TextStyle(
+        color:const Color(0xff58BE3F),
+        fontWeight: FontWeight.bold,
+        fontSize: 20.sp,
+      ) ,
       bodyLarge:  TextStyle(
         color: Colors.black,
         fontWeight: FontWeight.bold,

@@ -8,7 +8,7 @@ class VerifyOTPUseCase extends UseCase<void,VerifyOTPParams> {
   VerifyOTPUseCase(this._baseAuthRepository);
   @override
   Future<void> call(VerifyOTPParams params) async{
-    _baseAuthRepository.verifyOTP(smsCode: params.smsCode, verificationId: params.verificationId);
+  await  _baseAuthRepository.verifyOTP(smsCode: params.smsCode, verificationId: params.verificationId);
   }
   
 }

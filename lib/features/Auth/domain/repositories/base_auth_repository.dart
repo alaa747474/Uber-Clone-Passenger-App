@@ -10,6 +10,8 @@ abstract class BaseAuthRepository {
       required void Function(String)? codeAutoRetrievalTimeout});
   Future<void> verifyOTP(
       {required String smsCode, required String verificationId});
-  Future<void>saveUserInfromation({required UserModel userModel});
+  Future<void> saveUserInfromation({required UserModel userModel});
   Future<String> getImageUrl(String uid);
+  Stream<User?> getUserState();
+  Future<void> signOut();
 }

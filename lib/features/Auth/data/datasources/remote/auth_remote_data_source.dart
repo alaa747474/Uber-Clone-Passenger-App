@@ -18,6 +18,8 @@ abstract class BaseAuthRemoteDataSource {
       {required String smsCode, required String verificationId});
   Future<void> saveUserInformation({required UserModel userModel});
   Future<String> getImageUrl(String uid);
+  Stream<User?> getUserState();
+  Future<void> signOut();
 }
 
 class AuthRemoteDataSource implements BaseAuthRemoteDataSource {
@@ -60,22 +62,26 @@ class AuthRemoteDataSource implements BaseAuthRemoteDataSource {
       _auth.currentUser!.updateEmail(userModel.email),
       _auth.currentUser!.updatePhotoURL(userModel.image),
       _firestore
-          .collection('user')
+          .collection('users')
           .doc(_auth.currentUser!.uid)
           .set(userModel.toJson())
     ]);
   }
-    
-   @override
-     Future<String> getImageUrl(String uid) async {
+
+  @override
+  Future<String> getImageUrl(String uid) async {
     final profileImage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
-    File profileImage0 = File(profileImage!.path);
-    await _storage
-        .ref('UserProfileImages/$uid')
-        .putFile(profileImage0);
-    return await _storage
-        .ref('UserProfileImages/$uid')
-        .getDownloadURL();
+    File file = File(profileImage!.path);
+    await _storage.ref('UserProfileImages/$uid').putFile(file);
+    return await _storage.ref('UserProfileImages/$uid').getDownloadURL();
+  }
+
+  @override
+  Stream<User?> getUserState() => _auth.authStateChanges();
+
+  @override
+  Future<void> signOut() async {
+    _auth.signOut();
   }
 }

@@ -1,12 +1,13 @@
 import 'package:uber_clone/core/usecase/usecase.dart';
 import 'package:uber_clone/features/Auth/domain/repositories/base_auth_repository.dart';
 
-class GetImageUrlUseCase extends UseCase<Future<String>, String> {
+class SignOutUseCase extends UseCase<void,NoParams>{
   final BaseAuthRepository _baseAuthRepository;
 
-  GetImageUrlUseCase(this._baseAuthRepository);
+  SignOutUseCase(this._baseAuthRepository);
   @override
-  Future<String> call(String params) {
-    return _baseAuthRepository.getImageUrl(params);
+  Future<void> call(NoParams params) {
+    return _baseAuthRepository.signOut();
   }
+  
 }

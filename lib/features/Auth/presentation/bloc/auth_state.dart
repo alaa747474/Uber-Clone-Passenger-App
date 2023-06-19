@@ -23,3 +23,13 @@ class AuthFailure extends AuthState {
 class UserInformationSaved extends AuthState {
   
 }
+class ProfilePicLoaded extends AuthState {
+  
+}
+class InitialRouteScreenLoaded extends AuthState  {
+  final Widget screen;
+
+ const InitialRouteScreenLoaded(this.screen);
+ @override
+  List<Object> get props => [screen];
+}
