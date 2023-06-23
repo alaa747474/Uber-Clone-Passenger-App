@@ -73,8 +73,8 @@ class AuthRemoteDataSource implements BaseAuthRemoteDataSource {
     final profileImage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
     File file = File(profileImage!.path);
-    await _storage.ref('UserProfileImages/$uid').putFile(file);
-    return await _storage.ref('UserProfileImages/$uid').getDownloadURL();
+    await _storage.ref('UserProfilePic/$uid').putFile(file);
+    return await _storage.ref('UserProfilePic/$uid').getDownloadURL();
   }
 
   @override
@@ -82,6 +82,6 @@ class AuthRemoteDataSource implements BaseAuthRemoteDataSource {
 
   @override
   Future<void> signOut() async {
-    _auth.signOut();
+    await _auth.signOut();
   }
 }

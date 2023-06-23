@@ -4,8 +4,8 @@ import 'package:uber_clone/core/constants/app_routes_name.dart';
 import 'package:uber_clone/core/widgets/custom_app_bar.dart';
 import 'package:uber_clone/core/widgets/custom_button.dart';
 import 'package:uber_clone/core/widgets/custom_card.dart';
-import 'package:uber_clone/features/home/presentation/widgets/intro_card.dart';
-import 'package:uber_clone/features/home/presentation/widgets/saved_place_button.dart';
+import 'package:uber_clone/features/trip/presentation/widgets/intro_card.dart';
+import 'package:uber_clone/features/trip/presentation/widgets/saved_place_button.dart';
 import 'package:uber_clone/features/trip/presentation/widgets/map_view.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -14,6 +14,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const Drawer(),
         body: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -31,16 +32,27 @@ class HomeScreen extends StatelessWidget {
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 15.w),
-          child: const CustomCard(
+          child: CustomCard(
             horizontal: 0,
-            child: MapView(),
+            child: Stack(
+              children: [
+                const MapView(),
+                InkWell(
+                  child: const SizedBox(
+                    width: double.infinity,
+                    height: double.infinity,
+                  ),
+                  onTap: () =>
+                      Navigator.pushNamed(context, AppRoutes.tripScreen),
+                )
+              ],
+            ),
           ),
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 30.h),
           child: CustomButton(
-              onPressed: () =>
-                  Navigator.pushNamed(context, AppRoutes.tripScreen),
+              onPressed: (){},
               text: 'Book a ride now !'),
         ),
       ],

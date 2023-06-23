@@ -17,6 +17,9 @@ class IntroCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                IconButton(onPressed: (){
+                  Scaffold.of(context).openDrawer();
+                }, icon: Icon(Icons.menu,color: Theme.of(context).primaryColor,)),
                 Text('Welcome to Wasalni',style: Theme.of(context).textTheme.bodyLarge),
                 const Text('Happy to have you, Access a trip is just a tap ,Happy to have you, Access a trip is just a tap'),
                 Text('Ride with Wasalni',style: Theme.of(context).textTheme.titleMedium)

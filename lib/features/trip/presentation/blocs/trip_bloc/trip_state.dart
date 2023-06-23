@@ -7,3 +7,4 @@ abstract class TripState extends Equatable {
   List<Object> get props => [];
 }
 class TripInitial extends TripState {}
+

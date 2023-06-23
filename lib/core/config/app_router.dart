@@ -4,8 +4,9 @@ import 'package:uber_clone/core/constants/app_routes_name.dart';
 import 'package:uber_clone/features/Auth/presentation/screens/login_screen.dart';
 import 'package:uber_clone/features/Auth/presentation/screens/otp_screen.dart';
 import 'package:uber_clone/features/Auth/presentation/screens/register_screen.dart';
-import 'package:uber_clone/features/home/presentation/screens/home_screen.dart';
-import 'package:uber_clone/features/trip/presentation/screens/trip_home_screen.dart';
+import 'package:uber_clone/features/trip/presentation/screens/home_screen.dart';
+import 'package:uber_clone/features/trip/presentation/screens/search_screen.dart';
+import 'package:uber_clone/features/trip/presentation/screens/trip_screen.dart';
 
 import '../../features/Auth/presentation/bloc/auth_bloc.dart';
 import '../service/service_locator.dart';
@@ -28,9 +29,17 @@ class AppRouter {
       case AppRoutes.registerScreen:
         return MaterialPageRoute(builder: (_) => const RegisterScreen());
       case AppRoutes.tripScreen:
-        return MaterialPageRoute(builder: (_) => const TripScreen());
+        return MaterialPageRoute(
+          builder: (_) => const TripScreen(),
+        );
       case AppRoutes.homeScreen:
-        return MaterialPageRoute(builder: (_) => const HomeScreen());
+        return MaterialPageRoute(
+          builder: (_) => const HomeScreen(),
+        );
+        case AppRoutes.searchScreen:
+        return MaterialPageRoute(
+          builder: (_) => const SearchScreen(),
+        );
     }
     return null;
   }

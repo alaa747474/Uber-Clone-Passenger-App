@@ -43,8 +43,9 @@ class AppTheme {
       ),
       bodySmall:  TextStyle(
         color: Colors.grey,
-        fontSize: 12.sp,
+        fontSize: 16.sp,
       ),
+      
     );
   }
 }

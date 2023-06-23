@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomBackButton extends StatelessWidget {
   const CustomBackButton({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BackButton(
-      
-      onPressed: () => Navigator.pop(context),
-      style: ButtonStyle(
-        elevation: const MaterialStatePropertyAll(10),
-          shadowColor: const MaterialStatePropertyAll(Colors.black26),
-          foregroundColor:
-              MaterialStatePropertyAll(Theme.of(context).primaryColor),
-          backgroundColor:
-              MaterialStatePropertyAll(Theme.of(context).cardColor)),
+    return Padding(
+      padding:  EdgeInsets.only(left: 15.w),
+      child: FloatingActionButton.small(
+          onPressed: () => Navigator.pop(context),
+          elevation: 10,
+          foregroundColor: Theme.of(context).primaryColor,
+          backgroundColor: Theme.of(context).cardColor,
+          child: const Center(child: Icon(Icons.arrow_back))),
     );
   }
 }

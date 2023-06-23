@@ -4,7 +4,7 @@ import 'package:uber_clone/core/widgets/custom_back_button.dart';
 
 import 'package:uber_clone/features/trip/presentation/widgets/current_location_card.dart';
 import 'package:uber_clone/features/trip/presentation/widgets/map_view.dart';
-import 'package:uber_clone/features/trip/presentation/widgets/trip_details_bottom_sheet.dart';
+import 'package:uber_clone/features/trip/presentation/widgets/details_bottom_sheet.dart';
 
 class TripScreen extends StatelessWidget {
   const TripScreen({super.key});
@@ -15,7 +15,7 @@ class TripScreen extends StatelessWidget {
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: [
-          const MapView(),
+         const MapView(),
           Padding(
             padding: EdgeInsets.only(top: 50.h),
             child: Align(
@@ -27,11 +27,14 @@ class TripScreen extends StatelessWidget {
                     SizedBox(
                       width: 15.w,
                     ),
-                    const CurrentLocationCard()
+                    const CurrentLocationCard(),
+                    SizedBox(
+                      width: 15.w,
+                    ),
                   ],
                 )),
           ),
-          const TripDetailsBottomSheet()
+          const DetailsBottomSheet()
         ],
       ),
     );

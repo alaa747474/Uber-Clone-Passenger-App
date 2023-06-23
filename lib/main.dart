@@ -1,4 +1,3 @@
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +6,7 @@ import 'package:uber_clone/core/config/app_router.dart';
 
 import 'package:uber_clone/core/config/theme.dart';
 import 'package:uber_clone/core/service/service_locator.dart';
+import 'package:uber_clone/features/trip/presentation/blocs/map_bloc/map_bloc.dart';
 import 'features/Auth/presentation/bloc/auth_bloc.dart';
 import 'firebase_options.dart';
 
@@ -16,6 +16,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(const MyApp());
 }
 
@@ -24,8 +25,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt.get<AuthBloc>()..add(GetUserState()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => getIt.get<AuthBloc>()..add(GetUserState()),
+        ),
+        BlocProvider(
+          create: (context) => getIt.get<MapBloc>()..add(GetCurrentPosition()),
+        ),
+      ],
       child: ScreenUtilInit(
         designSize: const Size(360, 690),
         minTextAdapt: true,
