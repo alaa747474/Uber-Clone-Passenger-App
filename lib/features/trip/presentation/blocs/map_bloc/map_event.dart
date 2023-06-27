@@ -26,3 +26,17 @@ class GetPlaceSuggestions extends MapEvent{
     @override
   List<Object> get props => [placeName];
 }
+class GetPlaceDetails extends MapEvent{
+  final String placeId;
+
+  const GetPlaceDetails(this.placeId);
+    @override
+  List<Object> get props => [placeId];
+}
+class GetPlaceDirections extends MapEvent{
+  final LatLng destination;
+
+  const GetPlaceDirections(this.destination);
+    @override
+  List<Object> get props => [destination];
+}
