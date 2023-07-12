@@ -4,17 +4,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:uber_clone/core/service/api_helper.dart';
-import 'package:uber_clone/features/trip/data/datasources/trip_remote_data_source.dart';
-import 'package:uber_clone/features/trip/data/repositories/trip_repository.dart';
-import 'package:uber_clone/features/trip/domain/repositories/base_trip_repository.dart';
-import 'package:uber_clone/features/trip/domain/usecases/get_place_details_use_case.dart';
-import 'package:uber_clone/features/trip/domain/usecases/get_place_directions_use_case.dart';
-import 'package:uber_clone/features/trip/domain/usecases/get_place_suggestions_use_case.dart';
-import 'package:uber_clone/features/trip/presentation/blocs/map_bloc/map_bloc.dart';
-
 import '../../features/Auth/auth.dart';
 import '../../features/Auth/domain/repositories/base_auth_repository.dart';
 import '../../features/Auth/presentation/bloc/auth_bloc.dart';
+import '../../features/map/data/datasources/trip_remote_data_source.dart';
+import '../../features/map/data/repositories/trip_repository.dart';
+import '../../features/map/domain/repositories/base_trip_repository.dart';
+import '../../features/map/domain/usecases/get_place_details_use_case.dart';
+import '../../features/map/domain/usecases/get_place_directions_use_case.dart';
+import '../../features/map/domain/usecases/get_place_suggestions_use_case.dart';
+import '../../features/map/presentation/blocs/map_bloc/map_bloc.dart';
 
 GetIt getIt = GetIt.instance;
 
@@ -44,8 +43,8 @@ class ServicesLocator {
         getIt(),
       ),
     );
-    getIt.registerLazySingleton<BaseTripRepository>(
-      () => TripRepository(
+    getIt.registerLazySingleton<BaseMapRepository>(
+      () => MapRepository(
         getIt(),
       ),
     );
@@ -55,7 +54,7 @@ class ServicesLocator {
       () => AuthRemoteDataSource(FirebaseAuth.instance,
           FirebaseFirestore.instance, FirebaseStorage.instance),
     );
-    getIt.registerLazySingleton<TripRemoteDataSource>(
-        () => TripRemoteDataSourceImpl(getIt()));
+    getIt.registerLazySingleton<MapRemoteDataSource>(
+        () => MapRemoteDataSourceImpl(getIt()));
   }
 }

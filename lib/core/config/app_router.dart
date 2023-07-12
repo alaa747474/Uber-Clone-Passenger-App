@@ -4,11 +4,11 @@ import 'package:uber_clone/core/constants/app_routes_name.dart';
 import 'package:uber_clone/features/Auth/presentation/screens/login_screen.dart';
 import 'package:uber_clone/features/Auth/presentation/screens/otp_screen.dart';
 import 'package:uber_clone/features/Auth/presentation/screens/register_screen.dart';
-import 'package:uber_clone/features/trip/presentation/screens/home_screen.dart';
-import 'package:uber_clone/features/trip/presentation/screens/search_screen.dart';
-import 'package:uber_clone/features/trip/presentation/screens/trip_screen.dart';
+import 'package:uber_clone/features/map/presentation/screens/home_screen.dart';
+import 'package:uber_clone/features/map/presentation/screens/map_screen.dart';
 
 import '../../features/Auth/presentation/bloc/auth_bloc.dart';
+import '../../features/map/presentation/screens/search_screen.dart';
 import '../service/service_locator.dart';
 
 class AppRouter {
@@ -28,9 +28,9 @@ class AppRouter {
                 ));
       case AppRoutes.registerScreen:
         return MaterialPageRoute(builder: (_) => const RegisterScreen());
-      case AppRoutes.tripScreen:
+      case AppRoutes.mapScreen:
         return MaterialPageRoute(
-          builder: (_) => const TripScreen(),
+          builder: (_) => const MapScreen(),
         );
       case AppRoutes.homeScreen:
         return MaterialPageRoute(

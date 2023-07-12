@@ -6,8 +6,10 @@ import 'package:uber_clone/core/config/app_router.dart';
 
 import 'package:uber_clone/core/config/theme.dart';
 import 'package:uber_clone/core/service/service_locator.dart';
-import 'package:uber_clone/features/trip/presentation/blocs/map_bloc/map_bloc.dart';
+import 'package:uber_clone/features/trip/presentation/bloc/trip_bloc.dart';
+import 'core/widgets/loading_screen.dart';
 import 'features/Auth/presentation/bloc/auth_bloc.dart';
+import 'features/map/presentation/blocs/map_bloc/map_bloc.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -33,6 +35,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => getIt.get<MapBloc>()..add(GetCurrentPosition()),
         ),
+        BlocProvider(
+          create: (context) => TripBloc(getIt.get<MapBloc>()),
+        ),
       ],
       child: ScreenUtilInit(
         designSize: const Size(360, 690),
@@ -56,15 +61,3 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class Loading extends StatelessWidget {
-  const Loading({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: CircularProgressIndicator(),
-      ),
-    );
-  }
-}

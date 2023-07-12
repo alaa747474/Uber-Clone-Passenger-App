@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uber_clone/core/usecase/usecase.dart';
 import '../../../../core/constants/app_routes_name.dart';
-import '../../../trip/presentation/screens/home_screen.dart';
+import '../../../map/presentation/screens/home_screen.dart';
 import '../../auth.dart';
 
 part 'auth_event.dart';
