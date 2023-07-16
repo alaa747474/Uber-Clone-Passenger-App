@@ -27,7 +27,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   final GetPlaceDetailsUseCase _getPlaceDetailsUseCase;
   final GetPlaceDirectionsUseCase _getPlaceDirectionsUseCase;
   final Completer<GoogleMapController> controller = Completer();
-  late GoogleMapController googleMapController;
+  //late GoogleMapController googleMapController;
   List<PointLatLng> decodedPolylinePoints = [];
   bool polyLineIsDrawn = false;
   MapBloc(this._getPlaceSuggestionsUseCase, this._getPlaceDetailsUseCase,
@@ -73,12 +73,17 @@ class MapBloc extends Bloc<MapEvent, MapState> {
 
   void _getPlaceDetails(GetPlaceDetails event, Emitter emit) async {
     final result = await _getPlaceDetailsUseCase.call(event.placeId);
-    result.fold((error) {
-      emit(state.copyWith(error: error.errorMessage));
-    }, (placeDetails) {
-      emit(state.copyWith(
-          placeDetails: placeDetails, placeDetailsState: RequestState.loaded));
-    });
+    result.fold(
+      (error) {
+        emit(state.copyWith(error: error.errorMessage));
+      },
+      (placeDetails) {
+        add(GetPlaceDirections(LatLng(placeDetails.lat, placeDetails.long)));
+        emit(state.copyWith(
+            placeDetails: placeDetails,
+            placeDetailsState: RequestState.loaded));
+      },
+    );
   }
 
   void _getPlaceDirections(GetPlaceDirections event, Emitter emit) async {
@@ -91,6 +96,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     result.fold((error) {
       emit(state.copyWith(error: error.errorMessage));
     }, (placeDirections) {
+      add(const DrawPolyline());
       emit(state.copyWith(
           placeDirections: placeDirections,
           placeDirectionsState: RequestState.loaded));
@@ -98,6 +104,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   }
 
   void _drawPolyline(DrawPolyline event, Emitter emit) async {
+    emit(state.copyWith(polylineState: RequestState.loading));
     decodedPolylinePoints =
         polylinePoints.decodePolyline(state.placeDirections!.ploylinePoints);
     polylines.add(Polyline(
@@ -107,12 +114,16 @@ class MapBloc extends Bloc<MapEvent, MapState> {
         points: decodedPolylinePoints
             .map((point) => LatLng(point.latitude, point.longitude))
             .toList()));
-
     emit(state.copyWith(polylineState: RequestState.loaded));
   }
-  void _removePolyline(RemovePolyline event ,Emitter emit){
+
+  void _removePolyline(RemovePolyline event, Emitter emit) {
+    emit(state.copyWith(
+        polylineState: RequestState.loading,));
     polylines.clear();
     decodedPolylinePoints.clear();
-    emit(state.copyWith(polylineState: RequestState.initial));
+    polylines = {};
+    emit(state.copyWith(
+        polylineState: RequestState.initial, placeDirections: null));
   }
 }

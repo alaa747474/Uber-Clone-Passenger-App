@@ -23,7 +23,7 @@ class MapView extends StatelessWidget {
         }
         if (state.currentLocationState == RequestState.loaded) {
           return GoogleMap(
-              polylines: context.read<MapBloc>().polylines,
+              polylines:state.placeDirections==null?{} :context.read<MapBloc>().polylines,
               padding: EdgeInsets.only(bottom: 150.h),
               onMapCreated: (controller) {
                 if (!(context.read<MapBloc>().controller.isCompleted)) {
@@ -38,7 +38,7 @@ class MapView extends StatelessWidget {
               initialCameraPosition: CameraPosition(
                   target: LatLng(
                       state.position!.latitude, state.position!.longitude),
-                  zoom: 8));
+                  zoom: 15));
         }
         return const ErrorTextWidget();
       },

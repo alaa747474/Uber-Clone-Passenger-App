@@ -11,7 +11,7 @@ class AppTheme {
         textTheme: textTheme(),
         useMaterial3: true,
         hintColor: Colors.grey[500],
-        primaryColor: const Color(0xff58BE3F),
+        primaryColor: const Color(0xff1CD981),
         cardColor: Colors.white,
         scaffoldBackgroundColor: const Color(0xffF2F2F2),
       );
@@ -28,7 +28,7 @@ class AppTheme {
         fontSize: 20.sp,
       ),
       titleMedium:TextStyle(
-        color:const Color(0xff58BE3F),
+        color:const Color(0xff1CD981),
         fontWeight: FontWeight.bold,
         fontSize: 20.sp,
       ) ,

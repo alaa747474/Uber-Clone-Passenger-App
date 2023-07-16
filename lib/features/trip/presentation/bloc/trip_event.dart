@@ -8,9 +8,13 @@ abstract class TripEvent extends Equatable {
 }
 
 class CalculateFare extends TripEvent {
+    @override
+  List<Object> get props => [];
+}
+class SaveTripRequests extends TripEvent {
+  final String vehicleType;
 
-  final VehicleType vehicleType;
-  const CalculateFare( this.vehicleType);
+  const SaveTripRequests(this.vehicleType);
     @override
   List<Object> get props => [vehicleType];
 }

@@ -4,7 +4,8 @@ import 'package:uber_clone/core/widgets/custom_card.dart';
 import 'package:uber_clone/features/map/presentation/widgets/search_results_bottom_sheet.dart';
 
 class DisabledSearchContainer extends StatelessWidget {
-  const DisabledSearchContainer({super.key});
+  final double? width;
+  const DisabledSearchContainer({super.key, this.width});
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +20,7 @@ class DisabledSearchContainer extends StatelessWidget {
         },
         child: CustomCard(
           height: 50.h,
+          width: width,
           child: Row(
             children: [
               Icon(

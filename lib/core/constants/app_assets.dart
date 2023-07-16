@@ -1,5 +1,6 @@
 class AppAssets {
   static const String animatedPhone = 'assets/json/phone.json';
+  static const String animatedSearch = 'assets/json/animated-search.json';
   static const String animatedSms = 'assets/json/sms.json';
   static const String animatedGraph = 'assets/json/graph.json';
   static const String normalCar = 'assets/images/normal-car.png';

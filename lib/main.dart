@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,6 +7,9 @@ import 'package:uber_clone/core/config/app_router.dart';
 
 import 'package:uber_clone/core/config/theme.dart';
 import 'package:uber_clone/core/service/service_locator.dart';
+import 'package:uber_clone/features/trip/data/datasources/trip_remote_data_source.dart';
+import 'package:uber_clone/features/trip/data/repositories/trip_repository.dart';
+import 'package:uber_clone/features/trip/domain/usecases/save_trip_requests_use_case.dart';
 import 'package:uber_clone/features/trip/presentation/bloc/trip_bloc.dart';
 import 'core/widgets/loading_screen.dart';
 import 'features/Auth/presentation/bloc/auth_bloc.dart';
@@ -36,7 +40,7 @@ class MyApp extends StatelessWidget {
           create: (context) => getIt.get<MapBloc>()..add(GetCurrentPosition()),
         ),
         BlocProvider(
-          create: (context) => TripBloc(getIt.get<MapBloc>()),
+          create: (context) => TripBloc(getIt.get<MapBloc>(),SaveTripRequestsUseCase(TripRepository(TripRemoteDataSource(FirebaseFirestore.instance)))),
         ),
       ],
       child: ScreenUtilInit(

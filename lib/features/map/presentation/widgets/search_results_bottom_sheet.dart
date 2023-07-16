@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:uber_clone/core/utils/enums.dart';
 import 'package:uber_clone/core/widgets/loading_indicator.dart';
 import 'package:uber_clone/features/map/presentation/widgets/current_location_card.dart';
@@ -32,13 +31,13 @@ class SearchResultsBottomSheet extends StatelessWidget {
           ),
           BlocConsumer<MapBloc, MapState>(
             listener: (context, state) {
-              if (state.placeDetailsState == RequestState.loaded) {
-                context.read<MapBloc>().add(GetPlaceDirections(
-                    LatLng(state.placeDetails!.lat, state.placeDetails!.long)));
-              }
-              if (state.placeDirectionsState == RequestState.loaded) {
-                context.read<MapBloc>().add(const DrawPolyline());
-              }
+              // if (state.placeDetailsState == RequestState.loaded) {
+              //   context.read<MapBloc>().add(GetPlaceDirections(
+              //       LatLng(state.placeDetails!.lat, state.placeDetails!.long)));
+              // }
+              // if (state.placeDirectionsState == RequestState.loaded) {
+              //   context.read<MapBloc>().add(const DrawPolyline());
+              // }
               
             },
             builder: (context, state) {
@@ -59,7 +58,6 @@ class SearchResultsBottomSheet extends StatelessWidget {
               if (state.placeSuggestionsState == RequestState.loading || state.polylineState==RequestState.loading) {
                 return const LoadingIndicator();
               }
-           
               if (state.placeSuggestionsState == RequestState.initial) {
                 return const Text('Start Search Now !');
               }
